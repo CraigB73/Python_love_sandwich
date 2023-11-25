@@ -18,13 +18,28 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS) #creates that client for the gspread
 SHEET = GSPREAD_CLIENT.open("love_sandwiches") #Using client object that provides authorization
 
-sales = SHEET.worksheet('sales')
+def get_sales_data():
+    """
+    Get sales figures input from the user
+    """
+    print("Please enter sales data formthe last market.")
+    print("Data should be six numbers, seperated by commas.")
+    print("Example: 10,20,30,40,50,60\n")
+    
+    data_str = input("Enter your data here: ")
+    print(f"The data provies is {data_str}")
 
-data = sales.get_all_values()
-
-print(data)
-
-
+get_sales_data()
+    
+    
+    
+    
+    
+"""
+real world you would set up own api that connects to python
+the company will use to enter in data/information  
+"""
+# csv format: comma sperated values(basic file type): a way for user to enter data using the teminal 
 # uses the with_scope() method pass in SCOPE
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
