@@ -27,10 +27,29 @@ def get_sales_data():
     print("Example: 10,20,30,40,50,60\n")
     
     data_str = input("Enter your data here: ")
-    print(f"The data provies is {data_str}")
+    sales_data = data_str.split(",")
+    vaildate_data(sales_data)
+    
+def vaildate_data(values):
+    """
+    Inside the try, converts all string values into intergers.
+    Raises ValueError if strings cannont be converted into int,
+    or if there aren't exactly 6 values
+    """
+    
+    try:
+        values = [eval(i) for i in values]
+        if len(values) != 6:
+            raise ValueError(
+                f"Exactly 6 values required, you provided {len(values)}"
+            )
+        print(values)
+       
+        
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")    
 
 get_sales_data()
-    
     
     
     
