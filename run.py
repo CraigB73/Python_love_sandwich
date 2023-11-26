@@ -22,14 +22,19 @@ def get_sales_data():
     """
     Get sales figures input from the user
     """
-    print("Please enter sales data formthe last market.")
-    print("Data should be six numbers, seperated by commas.")
-    print("Example: 10,20,30,40,50,60\n")
+    while True:
+        #printed instructions to the users
+        print("Please enter sales data from the last market.")
+        print("Data should be six numbers, seperated by commas.")
+        print("Example: 10,20,30,40,50,60\n")
     
-    data_str = input("Enter your data here: ")
-    sales_data = data_str.split(",")
-    vaildate_data(sales_data)
-    
+        data_str = input("Enter your data here: ")
+        sales_data = data_str.split(",") #Removes the commas(CSV) from user typed input
+        
+        if vaildate_data(sales_data):
+            print("Data is vaild!")
+            break
+    return sales_data
 def vaildate_data(values):
     """
     Inside the try, converts all string values into intergers.
@@ -38,18 +43,17 @@ def vaildate_data(values):
     """
     
     try:
-        values = [eval(i) for i in values]
+        [int(value) for value in values] # converts string to integers:(forloop returns int(value))
         if len(values) != 6:
-            raise ValueError(
-                f"Exactly 6 values required, you provided {len(values)}"
-            )
-        print(values)
-       
+            raise ValueError(f"Exactly 6 values required, you provided {len(values)}")
         
     except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")    
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+    return True 
 
-get_sales_data()
+data = get_sales_data()
+
     
     
     
