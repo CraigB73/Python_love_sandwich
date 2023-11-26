@@ -32,7 +32,7 @@ def get_sales_data():
         print("Data should be six numbers, seperated by commas.")
         print("Example: 10,20,30,40,50,60\n")
     
-        data_str = input("Enter your data here: ")   
+        data_str = input("Enter your sales data here: ")   
         sales_data = data_str.split(",") #Removes the commas(CSV) from user typed input
         
         if vaildate_data(sales_data):
@@ -56,14 +56,14 @@ def vaildate_data(values):
         return False
     return True 
 
-def update_sales_worksheet(data): # Need to pass in data as a paramenter
+def update_worksheet(data, worksheet): # Need to pass in data as a paramenter
     """
     Update sales worksheet, add new row with the list data provided.
     """
-    print("Updating sales worksheet...\n")
-    sales_worksheet = SHEET.worksheet("sales") # Access worksheet(Tab) from google sheets using the SHEET variable declared at top of the page that access the spreadsheet
+    print(f"Updating {worksheet} worksheet...\n")
+    sales_worksheet = SHEET.worksheet(worksheet) # Access worksheet(Tab) from google sheets using the SHEET variable declared at top of the page that access the spreadsheet
     sales_worksheet.append_row(data) # google append_row method that adds data to new row 
-    print("Sales worksheet updated successfully.\n")
+    print(f"{worksheet} worksheet updated successfully.\n")
 
 def calculate_surplus_data(sales_row):
     """
@@ -85,16 +85,34 @@ def calculate_surplus_data(sales_row):
         surplus_data.append(surplus)
     return surplus_data
 
-def main():
+    
+def get_stock_data():
+    """
+    Update surplus worksheet, add new row with each item total.
+    """
+    data_str = input("Enter stock data here: ")   
+    stock_data = data_str.split(",") #Removes the commas(CSV) from user typed input
+        
+    if stock_data:
+        vaildate_data(stock_data) 
+        print("Data is vaild!")
+    
+    return stock_data
+ 
+    
+def main(): # Good practice to have a main funtion to run all functions 
     """
     Run all program function
     """   
     data = get_sales_data()
     print(data)
     sales_data = [int(num) for num in data]
-    update_sales_worksheet(sales_data)
+    update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus_data(sales_data)
-    print(new_surplus_data)
+    update_worksheet(new_surplus_data, "surplus")
+    new_stock_data = get_stock_data()
+    update_worksheet(new_stock_data, "stock")
+    
 print("Welcome to Love Sandwiches Data Automation")
 main()
 
