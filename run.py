@@ -1,6 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
-from pprint import pprint
+
 """
 The SCOPE lists the APIs that the program should access in order to run
 SCOPE will not change so declare as a constant(all caps)
@@ -32,7 +32,7 @@ def get_sales_data():
         print("Data should be six numbers, seperated by commas.")
         print("Example: 10,20,30,40,50,60\n")
 
-        data_str = input("Enter your sales data here: ")   
+        data_str = input("Enter your sales data here:\n")# Need to add "\n" before deploy with HEROKU : input will not show up 
         sales_data = data_str.split(",") #Removes the commas(CSV) from user typed input
         
         if vaildate_data(sales_data):
@@ -151,11 +151,6 @@ print("Welcome to Love Sandwiches Data Automation")
 main()
 
 
-
-    
-    
-    
-    
 """
 real world you would set up own api that connects to python
 the company will use to enter in data/information  
