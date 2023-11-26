@@ -20,7 +20,10 @@ SHEET = GSPREAD_CLIENT.open("love_sandwiches") #Using client object that provide
 
 def get_sales_data():
     """
-    Get sales figures input from the user
+    Get sales figures input from the user.
+    Run a while loop to collect a valid string of data from the user
+    via the termina, which must be a string of 6 numbers separated by commas.
+    The loop will repeatedly request data, until it is valid.
     """
     while True:
         #printed instructions to the users
@@ -28,12 +31,13 @@ def get_sales_data():
         print("Data should be six numbers, seperated by commas.")
         print("Example: 10,20,30,40,50,60\n")
     
-        data_str = input("Enter your data here: ")
+        data_str = input("Enter your data here: ")   
         sales_data = data_str.split(",") #Removes the commas(CSV) from user typed input
         
         if vaildate_data(sales_data):
             print("Data is vaild!")
             break
+        
     return sales_data
 def vaildate_data(values):
     """
@@ -41,9 +45,8 @@ def vaildate_data(values):
     Raises ValueError if strings cannont be converted into int,
     or if there aren't exactly 6 values
     """
-    
     try:
-        [int(value) for value in values] # converts string to integers:(forloop returns int(value))
+        [int(value) for value in values] # check that converts string to integers:(for loop returns int(value)). Ensures that no strings can be entered (ex:'four') by the user
         if len(values) != 6:
             raise ValueError(f"Exactly 6 values required, you provided {len(values)}")
         
@@ -52,7 +55,19 @@ def vaildate_data(values):
         return False
     return True 
 
+def update_sales_worksheet(data):
+    """
+    Update sales worksheet, add new row with the list data provided.
+    """
+    print("Updating sales worksheet...\n")
+    sales_worksheet = SHEET.worksheet("sales")
+    sales_worksheet.append_row(data)
+    print("Sales worksheet updated successfully.\n")
+    
 data = get_sales_data()
+print(data)
+sales_data = [int(num) for num in data]
+update_sales_worksheet(sales_data)
 
     
     
