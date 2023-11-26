@@ -31,7 +31,7 @@ def get_sales_data():
         print("Please enter sales data from the last market.")
         print("Data should be six numbers, seperated by commas.")
         print("Example: 10,20,30,40,50,60\n")
-    
+
         data_str = input("Enter your sales data here: ")   
         sales_data = data_str.split(",") #Removes the commas(CSV) from user typed input
         
@@ -40,6 +40,8 @@ def get_sales_data():
             break
         
     return sales_data
+
+
 def vaildate_data(values):
     """
     Inside the try, converts all string values into intergers.
@@ -58,7 +60,7 @@ def vaildate_data(values):
 
 def update_worksheet(data, worksheet): # Need to pass in data as a paramenter
     """
-    Update sales worksheet, add new row with the list data provided.
+    Update worksheets, add new row with the provided data.
     """
     print(f"Updating {worksheet} worksheet...\n")
     sales_worksheet = SHEET.worksheet(worksheet) # Access worksheet(Tab) from google sheets using the SHEET variable declared at top of the page that access the spreadsheet
@@ -98,7 +100,24 @@ def get_stock_data():
         print("Data is vaild!")
     
     return stock_data
- 
+
+def get_last_5_entries_sales():
+    """
+    Collects collumns of data from sales worksheet, collecting
+    the last 5 entries for each sandwich and returns the data
+    as a list of lists.
+    """ 
+    
+    sales = SHEET.worksheet('sales')
+    # column = sales.col_values(3) #Grabs the data from column three ('chicken salad)
+    
+    columns = []
+    for ind in range(1,7):
+        column = sales.col_values(ind)
+        columns.append(column[-5:])# column[-5:] is a slice the ":" the want to slice multiple values from the list
+    return columns 
+        
+    
     
 def main(): # Good practice to have a main funtion to run all functions 
     """
@@ -114,7 +133,8 @@ def main(): # Good practice to have a main funtion to run all functions
     update_worksheet(new_stock_data, "stock")
     
 print("Welcome to Love Sandwiches Data Automation")
-main()
+#main()
+sales_columns = get_last_5_entries_sales()
 
 
     
